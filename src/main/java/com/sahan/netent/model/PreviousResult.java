@@ -3,7 +3,6 @@ package com.sahan.netent.model;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import javax.persistence.*;
 import java.io.Serializable;
-import static javax.persistence.GenerationType.IDENTITY;
 
 @Entity
 @Table(name = "previous_result", catalog = "simple_game_db")
@@ -13,7 +12,7 @@ public class PreviousResult implements Serializable {
     private double amount;
 
     @Id
-    @GeneratedValue(strategy = IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", unique = true, nullable = false)
     @JsonProperty("id")
     public int getId() {
