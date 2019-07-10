@@ -20,5 +20,4 @@ public class SwaggerConfig {
                 .paths(regex("/rest.*"))
                 .build();
     }
-    
 }
