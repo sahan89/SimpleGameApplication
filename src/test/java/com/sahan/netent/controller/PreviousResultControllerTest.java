@@ -28,11 +28,11 @@ public class PreviousResultControllerTest {
     private MockMvc mockMvc;
 
     @MockBean
-    private PreviousResultService service;
+    private PreviousResultService previousResultService;
 
     @Before
     public void setUp() {
-        when(service.findPreviousResultByUniqueId(UNIQUE_ID)).thenReturn(createResultMock());
+        when(previousResultService.findPreviousResultByUniqueId(UNIQUE_ID)).thenReturn(createResultMock());
     }
 
     @Test
@@ -41,7 +41,7 @@ public class PreviousResultControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.amount", Matchers.is(AMOUNT)))
                 .andExpect(jsonPath("$.id", Matchers.is(ID)))
-                .andExpect(jsonPath("$.uniqueId",Matchers.is(UNIQUE_ID)));
+                .andExpect(jsonPath("$.uniqueId", Matchers.is(UNIQUE_ID)));
     }
 
     private PreviousResult createResultMock() {
