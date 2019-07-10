@@ -7,6 +7,7 @@ Simple Game Application assignment for NetEnt.
 * MySQL
 * Spring Boot
 * Hibernate
+* JUnit
 * Swagger ```http://localhost:8085/swagger-ui.html```
 
 ## *Build Project*
