@@ -30,7 +30,7 @@ public class PreviousResultControllerTest {
     private PreviousResultService service;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         when(service.findPreviousResultByUniqueId(ID)).thenReturn(createResultMock());
     }
 
