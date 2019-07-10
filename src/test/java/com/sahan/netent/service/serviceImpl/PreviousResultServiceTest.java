@@ -8,6 +8,8 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 public class PreviousResultServiceTest {
+    private static final int UNIQUE_ID = 719;
+
     @BeforeClass
     public static void init() {
         RestAssured.baseURI = "http://localhost";
@@ -18,6 +20,6 @@ public class PreviousResultServiceTest {
     public void testResultFetchesSuccess() {
         get("rest/resultController/result?uniqueId=719")
                 .then()
-                .body("uniqueId", equalTo(719));
+                .body("uniqueId", equalTo(UNIQUE_ID));
     }
 }
