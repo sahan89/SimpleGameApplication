@@ -3,6 +3,7 @@ package com.sahan.netent.model;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Date;
 
 @Entity
 @Table(name = "previous_result", catalog = "simple_game_db")
@@ -10,6 +11,7 @@ public class PreviousResult implements Serializable {
     private int id;
     private int uniqueId;
     private double amount;
+    private Date createdDate;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -41,5 +43,15 @@ public class PreviousResult implements Serializable {
 
     public void setAmount(double amount) {
         this.amount = amount;
+    }
+
+    @Column(name = "create_date")
+    @JsonProperty("createDate")
+    public Date getCreatedDate() {
+        return createdDate;
+    }
+
+    public void setCreatedDate(Date createdDate) {
+        this.createdDate = createdDate;
     }
 }

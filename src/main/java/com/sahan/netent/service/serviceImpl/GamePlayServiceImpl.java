@@ -11,6 +11,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
+
 @Service
 public class GamePlayServiceImpl implements GamePlayService {
 
@@ -29,7 +31,7 @@ public class GamePlayServiceImpl implements GamePlayService {
         if (gamePlay.getGameType() == GameType.NORMAL.getGameTypeId() && (gamePlay.getCoins() == 10)) {
             int winningCoins = coinWinningChance();
             int winningFreeRound = freeRoundWinningChance();
-            int randomNumber = (int) (Math.random() * 10000);
+            int randomNumber = (int) (Math.random());
 
             if (winningFreeRound != 0) {
                 GamePlay newWinningPlay = new GamePlay();
@@ -47,6 +49,7 @@ public class GamePlayServiceImpl implements GamePlayService {
                 previousResult.setUniqueId(lastRecordFromDb.getId() + randomNumber);
             }
 
+            previousResult.setCreatedDate(new Date());
             PreviousResult saveObject = this.previousResultRepository.save(previousResult);
             responseObject = new ResponseObject("Success!", true, saveObject);
             return new ResponseEntity<>(responseObject, HttpStatus.OK);
@@ -57,8 +60,7 @@ public class GamePlayServiceImpl implements GamePlayService {
     }
 
     private int coinWinningChance() {
-        int randomNumber = (int) (Math.random() * 10000);
-        int generatedNo = randomNumber % 100;
+        int generatedNo = randomNoGenerator();
         int earnCoins = 0;
         if (generatedNo < 30) {
             earnCoins += 20;
@@ -67,12 +69,17 @@ public class GamePlayServiceImpl implements GamePlayService {
     }
 
     private int freeRoundWinningChance() {
-        int randomNumber = (int) (Math.random() * 10000);
-        int generatedNo = randomNumber % 100;
+        int generatedNo = randomNoGenerator();
         int freeRound = 0;
         if (generatedNo < 10) {
             freeRound += 1;
         }
         return freeRound;
+    }
+
+    private int randomNoGenerator() {
+        int randomNumber = (int) (Math.random());
+        int generatedNo = randomNumber % 100;
+        return generatedNo;
     }
 }
