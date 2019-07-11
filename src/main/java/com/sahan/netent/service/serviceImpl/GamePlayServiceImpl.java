@@ -78,7 +78,7 @@ public class GamePlayServiceImpl implements GamePlayService {
     }
 
     private int randomNoGenerator() {
-        int randomNumber = (int) (Math.random());
+        int randomNumber = (int) (Math.random() * 100000);
         int generatedNo = randomNumber % 100;
         return generatedNo;
     }
