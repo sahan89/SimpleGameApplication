@@ -76,7 +76,7 @@ public class GamePlayServiceImpl implements GamePlayService {
     private void coinWinningChance() {
         generatedNo = randomNoGenerator();
         if (generatedNo < 30) {
-            winningCoins = +20;
+            winningCoins =+ 20;
         } else {
             winningCoins = 0;
         }
