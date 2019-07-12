@@ -17,60 +17,74 @@ import java.util.Date;
 public class GamePlayServiceImpl implements GamePlayService {
 
     private final PreviousResultRepository previousResultRepository;
+    private int freeRound = 0;
+    private int winningCoins = 0;
+    private int generatedNo = 0;
 
     @Autowired
     public GamePlayServiceImpl(PreviousResultRepository previousResultRepository) {
         this.previousResultRepository = previousResultRepository;
     }
 
-
     @Override
     public ResponseEntity<ResponseObject> playNormalGameRound(GamePlay gamePlay) {
         ResponseObject responseObject;
-
-        if (gamePlay.getGameType() == GameType.NORMAL.getGameTypeId() && (gamePlay.getCoins() == 10)) {
-            int winningCoins = coinWinningChance();
-            int winningFreeRound = freeRoundWinningChance();
-            int randomNumber = (int) (Math.random());
-
-            if (winningFreeRound != 0) {
-                GamePlay newWinningPlay = new GamePlay();
-                newWinningPlay.setCoins(0);
-                newWinningPlay.setGameType(GameType.NORMAL.getGameTypeId());
-                playNormalGameRound(newWinningPlay);
-            }
-
-            PreviousResult previousResult = new PreviousResult();
-            previousResult.setAmount(winningCoins);
-            PreviousResult lastRecordFromDb = previousResultRepository.findTopByOrderByUniqueIdDesc();
-            if (lastRecordFromDb == null) {
-                previousResult.setUniqueId(1 + randomNumber);
+        if ((gamePlay.getGameType() == GameType.NORMAL.getGameTypeId() && gamePlay.getCoins() == 10) && freeRound == 0) {
+            coinWinningChance();
+            int winRound = freeRoundWinningChance();
+            if (winRound == 0) {
+                PreviousResult previousResult = new PreviousResult();
+                previousResult.setAmount(winningCoins);
+                PreviousResult lastRecordFromDb = previousResultRepository.findTopByOrderByUniqueIdDesc();
+                if (lastRecordFromDb == null) {
+                    previousResult.setUniqueId(1);
+                } else {
+                    previousResult.setUniqueId(lastRecordFromDb.getId() + 1);
+                }
+                previousResult.setCreatedDate(new Date());
+                PreviousResult saveObject = this.previousResultRepository.save(previousResult);
+                responseObject = new ResponseObject("Success! " + ((freeRound == 0) ? "No Free round!" : "You won the Free round!"), true, saveObject);
+                return new ResponseEntity<>(responseObject, HttpStatus.OK);
             } else {
-                previousResult.setUniqueId(lastRecordFromDb.getId() + randomNumber);
+                responseObject = new ResponseObject(("Success! You won the Free round!"), true, null);
+                return new ResponseEntity<>(responseObject, HttpStatus.OK);
             }
-
-            previousResult.setCreatedDate(new Date());
-            PreviousResult saveObject = this.previousResultRepository.save(previousResult);
-            responseObject = new ResponseObject("Success!", true, saveObject);
-            return new ResponseEntity<>(responseObject, HttpStatus.OK);
+        } else if (gamePlay.getGameType() == GameType.FREE.getGameTypeId() && gamePlay.getCoins() == 0 && freeRound == 1) {
+            freeRound = 0;
+            winFreeRound();
+        } else if (freeRound == 1) {
+            responseObject = new ResponseObject("Please use your free round first!", false, null);
+            return new ResponseEntity<>(responseObject, HttpStatus.NOT_ACCEPTABLE);
+        } else if (freeRound == 0) {
+            responseObject = new ResponseObject("Not available free round!", false, null);
+            return new ResponseEntity<>(responseObject, HttpStatus.NOT_ACCEPTABLE);
         } else {
             responseObject = new ResponseObject("Invalid Input!", false, null);
-            return new ResponseEntity<>(responseObject, HttpStatus.NOT_ACCEPTABLE);
+            return new ResponseEntity<>(responseObject, HttpStatus.BAD_REQUEST);
         }
+        responseObject = new ResponseObject("Success!", true, null);
+        return new ResponseEntity<>(responseObject, HttpStatus.OK);
     }
 
-    private int coinWinningChance() {
-        int generatedNo = randomNoGenerator();
-        int earnCoins = 0;
+    private void winFreeRound() {
+        GamePlay newWinningPlay = new GamePlay();
+        newWinningPlay.setCoins(10);
+        newWinningPlay.setGameType(1);
+        playNormalGameRound(newWinningPlay);
+    }
+
+    private void coinWinningChance() {
+        generatedNo = randomNoGenerator();
         if (generatedNo < 30) {
-            earnCoins += 20;
+            winningCoins = +20;
+        } else {
+            winningCoins = 0;
         }
-        return earnCoins;
     }
 
     private int freeRoundWinningChance() {
-        int generatedNo = randomNoGenerator();
-        int freeRound = 0;
+        generatedNo = randomNoGenerator();
+        freeRound = 0;
         if (generatedNo < 10) {
             freeRound += 1;
         }
@@ -78,8 +92,8 @@ public class GamePlayServiceImpl implements GamePlayService {
     }
 
     private int randomNoGenerator() {
-        int randomNumber = (int) (Math.random());
-        int generatedNo = randomNumber % 100;
+        int randomNumber = (int) (Math.random() * 10000);
+        generatedNo = randomNumber % 100;
         return generatedNo;
     }
 }
