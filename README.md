@@ -23,7 +23,8 @@ Play Game ```http://localhost:8085/rest/gamePlayController/normalGameRound```
 
 Rest API body
 `coins = betting amount`
-`gameType = Normal round game`
+`Normal gameType = coins (10) gameType (1)`
+`Free gameType = coins (0) and gameType (0)`
 
 `{
    	"coins" : 10,
