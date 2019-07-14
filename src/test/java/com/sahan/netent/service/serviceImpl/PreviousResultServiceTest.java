@@ -8,7 +8,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 public class PreviousResultServiceTest {
-    private static final int UNIQUE_ID = 719;
+    private static final int UNIQUE_ID = 1;
 
     @BeforeClass
     public static void init() {
@@ -18,7 +18,7 @@ public class PreviousResultServiceTest {
 
     @Test
     public void testResultFetchesSuccess() {
-        get("rest/resultController/result?uniqueId=719")
+        get("rest/resultController/result?uniqueId=1")
                 .then()
                 .body("uniqueId", equalTo(UNIQUE_ID));
     }
