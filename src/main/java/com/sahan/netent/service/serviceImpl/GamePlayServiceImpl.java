@@ -62,7 +62,7 @@ public class GamePlayServiceImpl implements GamePlayService {
             responseObject = new ResponseObject("Invalid Input!", false, null);
             return new ResponseEntity<>(responseObject, HttpStatus.BAD_REQUEST);
         }
-        responseObject = new ResponseObject("Success!", true, null);
+        responseObject = new ResponseObject("Success your Free round.!", true, null);
         return new ResponseEntity<>(responseObject, HttpStatus.OK);
     }
 
