@@ -36,8 +36,9 @@ pipeline {
 	 stage ('Deployment Stage') {
             steps {
                  echo "######### Deployment Stage Done #########"
+		 sh 'docker exec -it bcb55f5362cd bash'
 		 echo (pwd)
-                 sh 'mv /var/jenkins_home/workspace/SimpleGamePipeline/target/simple-game-0.0.1-SNAPSHOT.war /opt/tomcat/webapps/'
+                 //sh 'mv /var/jenkins_home/workspace/SimpleGamePipeline/target/simple-game-0.0.1-SNAPSHOT.war /opt/tomcat/webapps/'
                  //bat 'cp /var/lib/jenkins/.m2/repository/HelloWorld/helloworld/1.0-SNAPSHOT/helloworld-1.0-SNAPSHOT.war /opt/apache-tomcat-9.0.21/webapps/helloworld.war'
                  //bat 'cp C:\\Windows\\System32\\config\\systemprofile\\.jenkins\\workspace\\HelloWorldPipeline\\target\\helloworld-0.0.1.war /opt/apache-tomcat-9.0.21/webapps/helloworld.war'
                  //bat 'target\\helloworld-0.0.1.war C:\\Program Files\\Apache\\Tomcat 9.0\\webapps\\'
