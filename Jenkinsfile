@@ -29,7 +29,6 @@ pipeline {
 		
 	stage ('Testing Stage') {
             steps {
-                sh 'mvn test'
                 echo "######### Testing Stage Done #########"
             }
         }
