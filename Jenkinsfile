@@ -36,7 +36,7 @@ pipeline {
 	 stage ('Deployment Stage') {
             steps {
                  echo "######### Deployment Stage Done #########"
-		 'docker cp jenkins:/var/jenkins_home/workspace/SimpleGamePipeline/target/simple-game-0.0.1-SNAPSHOT.war /opt/tomcat/webapps/'
+		 sh 'docker cp jenkins:/var/jenkins_home/workspace/SimpleGamePipeline/target/simple-game-0.0.1-SNAPSHOT.war /opt/tomcat/webapps/'
 		 echo "xxxxxxxxxxxxx"
 		 echo (pwd)
                  //sh 'mv /var/jenkins_home/workspace/SimpleGamePipeline/target/simple-game-0.0.1-SNAPSHOT.war /opt/tomcat/webapps/'
