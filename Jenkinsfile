@@ -18,6 +18,15 @@ pipeline {
 		    echo "######### Initialize Stage Done #########"					
             }
         }
+
+     stage('Building image Stage') {
+      steps{
+        script {
+	 echo "######### Building image Stage Done #########"	
+          docker.build registry + ":$BUILD_NUMBER"
+        }
+      }
+    }
          
         stage ('Checkout Stage') {
             steps {
