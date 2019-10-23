@@ -19,15 +19,6 @@ pipeline {
             }
         }
 
-     stage('Building image Stage') {
-      steps{
-        script {
-	 echo "######### Building image Stage Done #########"	
-          docker.build registry + ":$BUILD_NUMBER"
-        }
-      }
-    }
-         
         stage ('Checkout Stage') {
             steps {
                 checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/sahan89/SimpleGameApplication.git']]])
@@ -47,6 +38,15 @@ pipeline {
                 echo "######### Testing Stage Done #########"
             }
         }
+	     
+	stage('Building image Stage') {
+      steps{
+        script {
+	 echo "######### Building image Stage Done #########"	
+          docker.build registry + ":$BUILD_NUMBER"
+        }
+      }
+    }
 	     
 	 stage ('Deployment Stage') {
             steps {
