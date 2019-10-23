@@ -39,15 +39,15 @@ pipeline {
             }
         }
 	     
-	stage('Building image Stage') {
-      		steps{
-	      	sh 'docker version'
-        	script {          
+//	stage('Building image Stage') {
+ //     		steps{
+//	      	sh 'docker version'
+//        	script {          
           //docker.build registry + ":$BUILD_NUMBER"          
-	  echo "######### Building image Stage Done #########"	
-        }
-      }
-    }
+//	  echo "######### Building image Stage Done #########"	
+ //       }
+ //     }
+ //   }
 	     
 	 stage ('Deployment Stage') {
             steps {
