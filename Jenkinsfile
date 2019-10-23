@@ -41,9 +41,9 @@ pipeline {
 	     
 	stage('Building image Stage') {
       steps{
-        script {
-	 echo "######### Building image Stage Done #########"	
+        script {	 
           docker.build registry + ":$BUILD_NUMBER"
+	  echo "######### Building image Stage Done #########"	
         }
       }
     }
