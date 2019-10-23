@@ -6,7 +6,7 @@ pipeline {
     }
 	
     environment {
-    	registry = "https://hub.docker.com/u/sahan89/test_img"
+    	registry = "sahan89/test_img"
     	registryCredential = 'Sliit2009!'
     }	
 	
