@@ -4,6 +4,12 @@ pipeline {
         maven 'M2_Home' 
         jdk 'Java_Home' 
     }
+	
+    environment {
+    	registry = "https://hub.docker.com/u/sahan89/test_img"
+    	registryCredential = 'Sliit2009!'
+    }	
+	
      stages {             
          stage ('Initialize') {
             steps {
@@ -36,7 +42,7 @@ pipeline {
 	 stage ('Deployment Stage') {
             steps {
                  echo "######### Deployment Stage Done #########"
-		 sh 'docker cp jenkins:/var/jenkins_home/workspace/SimpleGamePipeline/target/simple-game-0.0.1-SNAPSHOT.war tomcat:/opt/tomcat/webapps/'
+		 //sh 'docker cp jenkins:/var/jenkins_home/workspace/SimpleGamePipeline/target/simple-game-0.0.1-SNAPSHOT.war tomcat:/opt/tomcat/webapps/'
 		 echo "xxxxxxxxxxxxx"
 		 echo (pwd)
                  //sh 'mv /var/jenkins_home/workspace/SimpleGamePipeline/target/simple-game-0.0.1-SNAPSHOT.war /opt/tomcat/webapps/'
